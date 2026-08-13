@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 화분 -->
+    <path
+        android:fillColor="#E2896B"
+        android:pathData="M38,70 L70,70 L66,86 L42,86 Z" />
+    <path
+        android:fillColor="#C96B4A"
+        android:pathData="M36,66 L72,66 L72,71 L36,71 Z" />
+
+    <!-- 화분 얼굴 -->
+    <path
+        android:fillColor="#4E342E"
+        android:pathData="M48,76 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" />
+    <path
+        android:fillColor="#4E342E"
+        android:pathData="M60,76 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#4E342E"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M48,80 Q54,84.5 60,80" />
+
+    <!-- 잎사귀 (화분에서 뻗어나오는 잎) -->
+    <group android:translateX="54" android:translateY="68" android:rotation="-50">
+        <path
+            android:fillColor="#4CAF50"
+            android:pathData="M0,0 C-5,-3 -5,-12 0,-20 C5,-12 5,-3 0,0 Z" />
+    </group>
+    <group android:translateX="54" android:translateY="68" android:rotation="-22">
+        <path
+            android:fillColor="#66BB6A"
+            android:pathData="M0,0 C-6,-4 -6,-15 0,-25 C6,-15 6,-4 0,0 Z" />
+    </group>
+    <group android:translateX="54" android:translateY="68" android:rotation="0">
+        <path
+            android:fillColor="#43A047"
+            android:pathData="M0,0 C-7,-5 -7,-19 0,-30 C7,-19 7,-5 0,0 Z" />
+    </group>
+    <group android:translateX="54" android:translateY="68" android:rotation="22">
+        <path
+            android:fillColor="#66BB6A"
+            android:pathData="M0,0 C-6,-4 -6,-15 0,-25 C6,-15 6,-4 0,0 Z" />
+    </group>
+    <group android:translateX="54" android:translateY="68" android:rotation="50">
+        <path
+            android:fillColor="#4CAF50"
+            android:pathData="M0,0 C-5,-3 -5,-12 0,-20 C5,-12 5,-3 0,0 Z" />
+    </group>
+
+    <!-- 물뿌리개 몸통 -->
+    <path
+        android:fillColor="#4FC3F7"
+        android:pathData="M58,24 C58,18 62,14 69,14 C76,14 80,18 80,25 C80,31 76,35 69,35 C63,35 58,32 58,24 Z" />
+
+    <!-- 물뿌리개 손잡이 -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#0288D1"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M64,15 A7,9 0 0,1 76,15" />
+
+    <!-- 물뿌리개 주둥이 -->
+    <path
+        android:fillColor="#4FC3F7"
+        android:pathData="M60,30 L50,42 L53,45 L63,33 Z" />
+    <path
+        android:fillColor="#0288D1"
+        android:pathData="M50,42 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0" />
+
+    <!-- 물방울 -->
+    <group android:translateX="48" android:translateY="49" android:scaleX="0.85" android:scaleY="0.85">
+        <path
+            android:fillColor="#4FC3F7"
+            android:pathData="M0,-6 C3,-2 3,3 0,3 C-3,3 -3,-2 0,-6 Z" />
+    </group>
+    <group android:translateX="54" android:translateY="56" android:scaleX="0.6" android:scaleY="0.6">
+        <path
+            android:fillColor="#4FC3F7"
+            android:pathData="M0,-6 C3,-2 3,3 0,3 C-3,3 -3,-2 0,-6 Z" />
+    </group>
+</vector>

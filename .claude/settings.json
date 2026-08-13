@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "additionalDirectories": ["../01_plan", "../10_codes"]
+  }
+}
