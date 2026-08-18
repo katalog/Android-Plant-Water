@@ -1,0 +1,48 @@
+name: Build and release APK
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          echo "GEMINI_API_KEY=${GEMINI_API_KEY}" > local.properties
+          ./gradlew assembleDebug \
+            -PversionCode=${{ github.run_number }} \
+            -PversionName=1.0.${{ github.run_number }}
+
+      - name: Rename APK
+        run: cp app/build/outputs/apk/debug/app-debug.apk PlantWater.apk
+
+      - name: Publish latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest build (${{ github.run_number }})
+          body: |
+            Automated build from commit ${{ github.sha }}.
+            Debug build — install by enabling "install unknown apps" for your browser/file manager.
+          prerelease: true
+          files: PlantWater.apk

@@ -23,8 +23,11 @@ android {
         applicationId = "com.moonkata.plantwater"
         minSdk = 24
         targetSdk = 37
-        versionCode = 1
-        versionName = "1.0"
+        // CI overrides these via -PversionCode/-PversionName so each automated
+        // release build gets a unique, increasing versionCode (needed for the
+        // APK to install as an update over a previous release build).
+        versionCode = (project.findProperty("versionCode") as String?)?.toIntOrNull() ?: 1
+        versionName = project.findProperty("versionName") as String? ?: "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField(
