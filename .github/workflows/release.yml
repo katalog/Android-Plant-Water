@@ -1,8 +1,8 @@
-name: Build and release APK
+name: Build and release signed APK
 
 on:
   push:
-    branches: [master]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -24,25 +24,42 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build debug APK
+      - name: Decode signing keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > release.jks
+
+      - name: Determine version
+        id: version
+        run: |
+          raw_tag="${GITHUB_REF_NAME}"
+          echo "name=${raw_tag#v}" >> "$GITHUB_OUTPUT"
+          echo "code=${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+
+      - name: Build signed release APK
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RELEASE_KEYSTORE_PATH: ${{ github.workspace }}/release.jks
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           echo "GEMINI_API_KEY=${GEMINI_API_KEY}" > local.properties
-          ./gradlew assembleDebug \
-            -PversionCode=${{ github.run_number }} \
-            -PversionName=1.0.${{ github.run_number }}
+          ./gradlew assembleRelease \
+            -PversionCode=${{ steps.version.outputs.code }} \
+            -PversionName=${{ steps.version.outputs.name }}
 
-      - name: Rename APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk PlantWater.apk
+      - name: Remove keystore
+        if: always()
+        run: rm -f release.jks
 
-      - name: Publish latest release
+      - name: Rename APK and generate checksum
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk PlantWater.apk
+          sha256sum PlantWater.apk > PlantWater.apk.sha256
+
+      - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: latest
-          name: Latest build (${{ github.run_number }})
-          body: |
-            Automated build from commit ${{ github.sha }}.
-            Debug build — install by enabling "install unknown apps" for your browser/file manager.
-          prerelease: true
-          files: PlantWater.apk
+          generate_release_notes: true
+          files: |
+            PlantWater.apk
+            PlantWater.apk.sha256

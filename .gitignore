@@ -15,3 +15,5 @@
 local.properties
 /.kotlin
 .claude/settings.local.json
+*.jks
+*.keystore
